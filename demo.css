@@ -1,0 +1,25 @@
+body {
+    padding: 0;
+    margin: auto;
+    width: 600px;
+}
+
+.place-holder {
+    height: 80px;
+    background-color: black;
+    color: white;
+    font-family: Arial;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.place-holder p {
+   /* color: white; */
+}
+
+#mapid {
+    height: 600px; 
+
+}
+
+

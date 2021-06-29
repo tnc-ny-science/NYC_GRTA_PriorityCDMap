@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>NYC Labs Geocoder</title>
+
+    <meta charset="utf-8" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+    <link rel="stylesheet" href="demo.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+    <!-- Load geocoding plugin after Leaflet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.4/leaflet-geocoder-mapzen.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.4/leaflet-geocoder-mapzen.js"></script>
+
+    <!-- Load point-in-polygon plugin -->
+    <script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js" ></script>
+
+    <!-- add require.js -->
+    <script src="js/jquery-3.6.0.min.js"></script>
+    
+</head>
+<body>
+
+
+<div class="place-holder">
+    <p>Geocoder app for locating priority NYC Community Distictricts.</p>
+    <p>Place holder div for testing reduced size map</p>
+</div>
+    <div id="mapid"></div>
+<div class="place-holder">
+    <p>Another place holder div for testing</p>
+</div>
+
+<script>
+    /*global variables */
+
+    /*set thematic colors */
+    var priorityFill = '#3ed18f';
+    var nonpriorityFill = '#ef8b75';
+
+    /*community district layer*/
+    var districtLayer = null;
+
+    /*map, geocoder*/
+    var districtmap, geocoder
+
+    /*list fields here to support schema change for community district layer */
+    var priorityDistrictFieldName = "Tax Abatement Priority Area";
+    var districtIDFieldName = "borocd"
+
+    /*create and load app components*/
+    createMap();
+    addMapLayers();
+    createGeocoder();
+    addGeocoderSelectionHandler();
+
+    /*use popup centered in map to convey errors */
+    function passErrorToPopup(e){       
+        var errorMessage = '<p>There was problem with this app</p>' +
+            '<p>'+e+'</p>';
+        var errorPopup = L.popup()
+        .setLatLng (districtmap.getCenter())
+        .setContent(errorMessage)
+        .openOn(districtmap)   
+    }
+
+
+    function createMap() {
+        var mapOptions = {
+            maxBounds: [ [ 39.50,-75.74 ] , [41.752,-71.92]],
+            minZoom: 10
+        }
+
+        //instantiate map
+        districtmap = L.map('mapid', mapOptions).setView([40.752, -73.9], 10);
+
+
+        L.tileLayer('https://maps{s}.nyc.gov/xyz/1.0.0/carto/basemap/{z}/{x}/{y}.jpg', {
+          minNativeZoom: 8,
+          maxNativeZoom: 19,
+          subdomains: '1234',
+          bounds: L.latLngBounds([39.3682, -75.9374], [42.0329, -71.7187])
+        }).addTo(districtmap);
+    }
+
+    function addMapLayers(){
+        try {
+            //add community district polygon layer
+            $.getJSON('./data/nyc_commdists_grta_priority.geojson', function(json) {
+                districtLayer = L.geoJSON(json, {            
+                style: function (feature) {
+                    /*conditionally set overlay fill color*/
+                    color = priorityFill
+                    if (feature.properties.grta_priority == "No") {
+                        color = nonpriorityFill;
+                    }
+
+                    return {color: color};
+                    }
+                })            
+                .bindPopup(
+                    function (layer) {
+                    // optionally enable inspection of district layer here
+                    return "popup message-- borocd: " + layer.feature.properties.borocd;
+                })
+                .addTo(districtmap);
+            });
+        } catch(e){
+            passErrorToPopup(e);   
+        }
+    }
+
+    function createGeocoder(){
+        try {
+
+            //define geocoder options
+            var options = {
+                  url: "https://geosearch.planninglabs.nyc/v1",
+                  attribution: "geocoding by <a href='https://geosearch.planninglabs.nyc'>NYC Planning</a>",          
+                  panToPoint: true,
+                  markers: false,
+                  textStrings: {
+                    INPUT_PLACEHOLDER: 'Enter address to find community district',
+                    INPUT_TITLE_ATTRIBUTE: 'Determine if address is within a priority community district'
+                  }
+                }
+        
+            geocoder = L.control.geocoder(null, options);
+            geocoder.setPosition('topright').addTo(districtmap);
+
+        } catch(e){
+            passErrorToPopup(e);   
+        }
+    }
+
+
+
+    //create custom marker
+    function createMarker(result){
+        try {
+            markerOptions = {
+                opacity: 1.0
+            }
+
+            messageContent = composeMessage(result)
+
+            marker = new L.Marker(result.latlng, markerOptions)
+            .bindPopup(messageContent)
+            .addTo(districtmap)
+            .openPopup();
+
+            //remove popup on geocoder clear for new search or focus to select from prior results
+            geocoder.on('reset', function(e){
+                marker.remove();
+            })
+
+            geocoder.on('focus', function(e){
+                marker.remove();
+            })
+        } catch(e){
+            passErrorToPopup(e);   
+        }
+
+    }
+
+
+    //handle selection of geocoder result from input
+    function addGeocoderSelectionHandler(){
+        try {
+            geocoder.on('select', function (result) {
+              if (result.feature){
+                //console.log('You’ve selected ' + result.latlng.lat + ":" + result.latlng.lng);
+                //clear and close geocoder
+                geocoder.collapse();
+                createMarker(result)        
+              } else {
+                console.log('Address not found')
+              }
+            });
+        } catch(e){
+            passErrorToPopup(e);   
+        }
+
+    }
+
+    /*set popup message -- input layer object with feature property referencing selected object */
+    function composeMessage (result){
+        try  {
+        //determine if inside priority district
+        //data: [locationstatus, districtid]
+        intersectionData = getIntersectionData(result);
+
+        //properties of geocoder result
+        var attribs = result.feature.properties;
+        var popupMessage = null;
+
+        //if have districtid
+        if (intersectionData[1]){
+        //success message
+            popupMessage =  '<h1 class="popup-header">' + intersectionData[0] + '</h1>' +
+            '<p class="popup-message">' + attribs.label + '</br>' +
+            ' Community District ID: ' + intersectionData[1] + '</br>' +
+            ' <a href="https://www.nature.org/en-us/" target="_blank">Learn more</a>' +
+            '</p>';
+        } else {
+        //error message
+            popupMessage =  '<h1 class="popup-header"> Community District Not Found </h1>' +
+            '<p class="popup-message">'+ intersectionData[0]  + '</br>' +
+            'There was a problem locating a community district for the location: ' + '</br>' +
+            attribs.label + '</br>' +
+            ' <a href="https://www.nature.org/en-us/" target="_blank">Learn more</a>' +
+            '</p>'
+        }
+
+        return popupMessage
+        
+        } catch(e) {
+            passErrorToPopup(e)
+        }  
+
+    }
+
+    /*With geocoder result, check for intersection with community district layer; 
+    return array with status (in/out priority district), districtid
+    */
+    function getIntersectionData(result){
+        try {
+            console.log("location is: " +  result.latlng.toString());
+
+            /*locationStatus outcomes: 
+            Yes - intersects priority dist.
+            No - intersects non-priority dist.
+            No District Found - geocode result does not intersect any district (address error, geocoder error, district geom error)
+            Multiple Districts Found - geocoder result intersects overlapping districts (district geom error)
+            */
+            locationStatus = null;
+            districtID = null;
+            
+            //check for district layer
+            if (districtLayer) {
+                //check for intersection
+                var results = leafletPip.pointInLayer(result.latlng, districtLayer);
+                var numDistricts = results.length;
+
+                switch(numDistricts){
+                    case 0:
+                        locationStatus = "No District Found";
+                        break;
+                    case 1:
+                        //Expected: value is "Yes" or "No"
+                        locationStatus = results[0].feature.properties[priorityDistrictFieldName]
+                        districtID = results[0].feature.properties[districtIDFieldName]
+                        if (locationStatus == "Yes"){
+                            locationStatus = "In Priority District"
+                        } else {
+                            locationStatus = "Not in Priority District"
+                        }
+                        break;
+                    case 2:
+                        locationStatus = "Multiple Districts Found"
+                        break;
+                    default:
+                        //problem with numDistricts 
+                        locationStatus = "Error locating district"
+                        break;
+
+                }
+                
+            }
+
+            return [locationStatus, districtID]
+
+        } catch(e) {
+
+            //todo: provide error notifications with widget
+            console.log("Error in getIntersectionData", e)
+            
+
+        }
+                    
+       
+    }
+
+
+
+</script>
+
+
+
+</body>
+</html>
