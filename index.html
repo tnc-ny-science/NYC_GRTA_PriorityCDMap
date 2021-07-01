@@ -10,7 +10,11 @@
     
     <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
     <link rel="stylesheet" href="demo.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+
+   <!-- SORTING OUT CSS - DEMOCOPY IS leafletcss+some stuff for legend (not really working)-->
+   <link rel="stylesheet" href="democopy.css" /> 
+
+   <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/> -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 
     <!-- Load geocoding plugin after Leaflet -->
@@ -87,11 +91,30 @@
           bounds: L.latLngBounds([39.3682, -75.9374], [42.0329, -71.7187])
         }).addTo(districtmap);
         L.tileLayer('https://maps{s}.nyc.gov/xyz/1.0.0/carto/label/{z}/{x}/{y}.png8', {
+         attribution: 'basemap by <a href="https://maps.nyc.gov/tiles/">NYC DoITT</a>',
           minNativeZoom: 11,
           maxNativeZoom: 19,
           subdomains: '1234',
           bounds: L.latLngBounds([39.3682, -75.9374], [42.0329, -71.7187])
         }).addTo(districtmap);
+
+/*Legend specific*/
+var legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function(districtmap) {
+  var div = L.DomUtil.create("div", ".legend");
+  div.innerHTML += "<h4>Tax Abatement Priority Areas</h4>";
+  div.innerHTML += '<i1 style="background: #477AC2"></i1><span>Water</span><br>';
+  div.innerHTML += '<i1 style="background: #448D40"></i1><span>Forest</span><br>';
+  
+  
+
+  return div;
+};
+
+legend.addTo(districtmap);
+
+        
     }
 
     function addMapLayers(){
@@ -127,8 +150,8 @@
             //define geocoder options
             var options = {
                   url: "https://geosearch.planninglabs.nyc/v1",
-                  attribution: "geocoding by <a href='https://geosearch.planninglabs.nyc'>NYC Planning</a>",          
-                  panToPoint: true,
+                  attribution: "geocoding by <a href='https://geosearch.planninglabs.nyc'>NYC Planning</a>", 
+                panToPoint: true,
                   markers: false,
                   textStrings: {
                     INPUT_PLACEHOLDER: 'Enter address to find community district',
