@@ -51,7 +51,8 @@ body {
     height: 18px;
     float: left;
     margin: 0 8px 0 0;
-    opacity: 0.7;
+    opacity: 0.6;
+    outline: 1px solid black;
   }
   
   .legend i1.icon {
