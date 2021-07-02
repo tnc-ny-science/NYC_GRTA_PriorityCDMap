@@ -102,10 +102,10 @@
 var legend = L.control({ position: "bottomright" });
 
 legend.onAdd = function(districtmap) {
-  var div = L.DomUtil.create("div", ".legend");
-  div.innerHTML += "<h4>Tax Abatement Priority Areas</h4>";
-  div.innerHTML += '<i1 style="background: #477AC2"></i1><span>Water</span><br>';
-  div.innerHTML += '<i1 style="background: #448D40"></i1><span>Forest</span><br>';
+  var div = L.DomUtil.create("div", "legend");
+  div.innerHTML += "<h4>Tax Abatement<br>Priority Areas</h4>";
+  div.innerHTML += '<i1 style="background: #477AC2"></i1><span>Priority Community District</span><br>';
+  div.innerHTML += '<i1 style="background: #448D40"></i1><span>Not Priority Community District</span><br>';
   
   
 
