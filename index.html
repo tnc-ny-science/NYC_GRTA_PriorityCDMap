@@ -8,7 +8,7 @@
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     
-    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="https://nature.org/content/dam/tnc/nature/en/icons/general-icons/icon_nature_favicon.ico" />
     <link rel="stylesheet" href="demo.css" />
 
    <!-- SORTING OUT CSS - DEMOCOPY IS leafletcss+some stuff for legend (not really working)-->
@@ -31,21 +31,21 @@
 <body>
 
 
-<div class="place-holder">
+<div class="place-holder1">
     <p>Geocoder app for locating priority NYC Community Distictricts.</p>
     <p>Place holder div for testing reduced size map</p>
 </div>
     <div id="mapid"></div>
-<div class="place-holder">
-    <p>Another place holder div for testing</p>
+<div class="place-holder2">
+   <br/>Another place holder div for testing
 </div>
 
 <script>
     /*global variables */
 
     /*set thematic colors */
-    var priorityFill = 'rgba(255, 193, 7, 0.2)';
-    var nonpriorityFill = 'rgba(30, 136, 229, 0.2)';
+    var priorityFill = 'rgba(205, 201, 15, 0.2)';
+    var nonpriorityFill = 'rgba(0, 150, 204, 0.2)';
 
     /*community district layer*/
     var districtLayer = null;
@@ -97,6 +97,8 @@
     addMapLayers();
     createGeocoder();
     addGeocoderSelectionHandler();
+    addLegend();
+    L.control.scale().addTo(districtmap);
 
     /*use popup centered in map to convey errors */
     function passErrorToPopup(e){       
@@ -119,7 +121,9 @@
         //instantiate map
         districtmap = L.map('mapid', mapOptions).setView([40.703312, -73.97968], 10);
 
+    }
 
+    function addLegend(){
 
         // Add LegendLegend specific
         var legend = L.control({ position: "bottomright" });
