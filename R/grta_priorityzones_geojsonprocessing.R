@@ -1,9 +1,7 @@
-# Load SF Library
+# Load necessary libraries
 library(sf)
 library(mapview)
 library(here)
-
-here()
 
 #Read data as geojson from URL
 nyc_commdistbounds <- st_read("https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Community_Districts/FeatureServer/0/query?where=1=1&outFields=*&outSR=4326&f=pgeojson")
