@@ -265,9 +265,10 @@
         if (intersectionData[1]){
         //success message
             popupMessage =  '<h1 class="popup-header">' + intersectionData[0] + '</h1>' +
-            '<p class="popup-message">' + attribs.label + '</br>' +
-            'Community District ID: ' + intersectionData[1] + '</br>' +
-            ' <a href="https://www.nature.org/en-us/" target="_blank">Learn more</a>' +
+            '<p class="popup-message"><strong>Address:</strong> ' + attribs.label + '</br>' +
+            '<strong>Community District ID:</strong> ' + intersectionData[1] + '</br>' +
+            "<strong><a target='_blank' rel='noopener noreferrer' href=" + intersectionData[2] + ">Community District Website</a></strong>" + "<br/>" +
+            "<strong><a target='_blank' rel='noopener noreferrer' href=" + intersectionData[3] + ">Community District Profile</a></strong>";
             '</p>';
         } else {
         //error message
@@ -302,6 +303,8 @@
             */
             locationStatus = null;
             districtID = null;
+            cb_url_result = null;
+            cd_profile_url_result = null;
 
             //check for district layer
             if (districtLayer) {
@@ -317,6 +320,8 @@
                         //Expected: value is "Yes" or "No"
                         locationStatus = results[0].feature.properties[priorityDistrictFieldName]
                         districtID = results[0].feature.properties[districtIDFieldName]
+                        cb_url_result = results[0].feature.properties[cb_url]
+                        cd_profile_url_result = results[0].feature.properties[cd_profile_url]
                         if (locationStatus == "Yes"){
                             locationStatus = "In Priority District"
                         } else {
@@ -335,7 +340,7 @@
                 
             }
 
-            return [locationStatus, districtID]
+            return [locationStatus, districtID, cb_url_result, cd_profile_url_result]
 
         } catch(e) {
 
