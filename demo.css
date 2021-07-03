@@ -1,32 +1,44 @@
 body {
     padding: 0;
     margin: auto;
-    width: 600px;
+   /* width: 600px;*/
 }
 
-.place-holder {
+.place-holder1 {
     height: 80px;
-    background-color: orange;
+    background-color: rgb(73, 169, 66, 1);
     color: white;
     font-family: Arial;
     text-align: center;
     padding-top: 10px;
 }
 
-.place-holder p {
+.place-holder1 p {
+   /* color: white; */
+}
+
+.place-holder2 {
+    height: 80px;
+    background-color: rgb(73, 169, 66, 1);
+    color: white;
+    font-family: Arial;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.place-holder2 p {
    /* color: white; */
 }
 
 #mapid {
-    height: 600px; 
-
-}
+    height: calc(100vh - (180px)); 
+ }
 
 
 /*Legend specific*/
 .legend {
     padding: 6px 8px;
-    font: 14px Arial, Helvetica, sans-serif;
+    font: 14px Arial, Arial, sans-serif;
     background: white;
     background: rgba(255, 255, 255, 0.8);
     /*box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);*/
