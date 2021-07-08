@@ -59,6 +59,8 @@
     /*set thematic colors */
     var priorityFill = 'rgba(205, 201, 15, 0.2)';
     var nonpriorityFill = 'rgba(0, 150, 204, 0.2)';
+    var boroughs = 'rgba(0, 0, 0, 0)';
+
 
     /*community district layer*/
     var districtLayer = null;
@@ -149,6 +151,7 @@
           div.innerHTML += "<h4>Tax Abatement<br>Priority Areas</h4>";
           div.innerHTML += '<i1 style="background:' + priorityFill + '"></i1><span>Priority Community District</span><br>';
           div.innerHTML += '<i1 style="background:' + nonpriorityFill + '"></i1><span>Not Priority Community District</span><br>';
+          div.innerHTML += '<i1 style="background:' + boroughs + '; outline-color:black; outline-style:solid; outline-width:2px;"></i1><span>Borough Boundaries</span><br>';
           return div;
         };
         legend.addTo(districtmap);
