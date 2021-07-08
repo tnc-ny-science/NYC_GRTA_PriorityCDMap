@@ -25,7 +25,11 @@
     <script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js" ></script>
 
     <!-- add require.js -->
-    <script src="js/jquery-3.6.0.min.js"></script>
+    <script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"
+			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			  crossorigin="anonymous"></script>
+    <!--<script src="js/jquery-3.6.0.min.js"></script>-->
     
 </head>
 <body>
@@ -196,7 +200,7 @@
             var options = {
                   url: "https://geosearch.planninglabs.nyc/v1",
                   attribution: "geocoding by <a href='https://geosearch.planninglabs.nyc'>NYC Planning</a>", 
-                panToPoint: true,
+                  panToPoint: true,
                   markers: false,
                   textStrings: {
                     INPUT_PLACEHOLDER: 'Enter address to find Community District',
