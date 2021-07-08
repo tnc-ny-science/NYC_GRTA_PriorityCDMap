@@ -188,7 +188,7 @@
                 })
                 .addTo(districtmap);
             });
-                        //add community district polygon layer
+                        //add borough boundary layer - originally sourced from https://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
                         $.getJSON('./data/boroughLayer.geojson', function(json) {
                 districtLayer = L.geoJSON(json, {
                     color: "#000000",
