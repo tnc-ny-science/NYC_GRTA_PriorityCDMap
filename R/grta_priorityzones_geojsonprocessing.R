@@ -91,3 +91,9 @@ mapview(nyc_commdist_data, zcol="grta_priority")
 
 # Write data out
 st_write(nyc_commdist_data, here("../data/nyc_commdists_grta_priority.geojson"))
+
+
+# Get a local copy of the Borough Boundaries (without water) for use in this work 
+# see here: https://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
+boroughs <- st_read("https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Borough_Boundary/FeatureServer/0/query?where=1=1&outFields=*&outSR=4326&f=pgeojson")
+st_write(boroughs, here("../data/boroughLayer.geojson"))
