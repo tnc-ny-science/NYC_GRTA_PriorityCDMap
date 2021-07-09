@@ -42,11 +42,13 @@
 </div>
     <div id="mapid"></div>
 <div class="place-holder2">
-    <p2><br/><i>* This tool is intended for informational purposes only.
-        <!-- LINK TO A PAGE ON THE GITHUB REPO -->
-    <a target='_blank' rel='noopener noreferrer' href="https://github.com/tnc-ny-science/nycgeocoder">Click here for disclaimer and terms of use.</a></i>
-    <br/>Web-app developed by <a target='_blank' rel='noopener noreferrer' href="https://www.nature.org/en-us/about-us/where-we-work/united-states/new-york/">
+    <p2><br/><i>* This tool is intended for informational purposes only.</i>
+       
+    <br/>Developed by <a target='_blank' rel='noopener noreferrer' href="https://www.nature.org/en-us/about-us/where-we-work/united-states/new-york/">
         The Nature Conservancy in New York</a>
+    <br/> See our 
+    <a target='_blank' rel='noopener noreferrer' href="https://www.nature.org/en-us/about-us/who-we-are/accountability/terms-of-use/">Terms of Use</a> & 
+    <a target='_blank' rel='noopener noreferrer' href="https://www.nature.org/en-us/about-us/who-we-are/accountability/privacy-policy/">Privacy Statment</a>
     <br/>
     <a target='_blank' rel='noopener noreferrer' href = "https://github.com/tnc-ny-science/nycgeocoder"><small><strong>Check out this project on GitHub</strong></small>
         <img src="images/GitHub-Mark/PNG/GitHub-Mark-Light-32px.png" width="12" height="12" alt="GitHub Logo"></a>
@@ -151,7 +153,7 @@
           div.innerHTML += "<h4>Tax Abatement<br>Priority Areas</h4>";
           div.innerHTML += '<i1 style="background:' + priorityFill + '"></i1><span>Priority Community District</span><br>';
           div.innerHTML += '<i1 style="background:' + nonpriorityFill + '"></i1><span>Not Priority Community District</span><br>';
-          div.innerHTML += '<i1 style="background:' + boroughs + '; outline-color:black; outline-style:solid; outline-width:2px;"></i1><span>Borough Boundaries</span><br>';
+          div.innerHTML += '<i1 style="background:' + boroughs + '; outline-color:gray; outline-style:solid; outline-width:2px;"></i1><span>Borough Boundaries</span><br>';
           return div;
         };
         legend.addTo(districtmap);
@@ -191,9 +193,9 @@
                         //add borough boundary layer - originally sourced from https://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
                         $.getJSON('./data/boroughLayer.geojson', function(json) {
                 districtLayer = L.geoJSON(json, {
-                    color: "#000000",
+                    color: "gray",
                     fillOpacity: 0,
-                    weight: 1.5
+                    weight: 2
                 }).addTo(districtmap);
             });
         } catch(e){
