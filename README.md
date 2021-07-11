@@ -1,4 +1,4 @@
-# NYC Green Roof Tax Abatement - Priority Community District Webmap
+# NYC Green Roof Tax Abatement - Priority Area Webmap
 
 Developed by [The Nature Conservancy in New York](https://www.nature.org/en-us/about-us/where-we-work/united-states/new-york/), Cities Program, with support from our Data Science team.
 
