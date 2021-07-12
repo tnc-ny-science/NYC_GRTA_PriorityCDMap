@@ -151,10 +151,10 @@
 
         legend.onAdd = function(districtmap) {
           var div = L.DomUtil.create("div", "legend");
-          div.innerHTML += "<h4>Tax Abatement<br>Priority Areas</h4>";
-          div.innerHTML += '<i1 style="background:' + priorityFill + '"></i1><span>Priority Community District</span><br>';
-          div.innerHTML += '<i1 style="background:' + nonpriorityFill + '"></i1><span>Not Priority Community District</span><br>';
-          div.innerHTML += '<i1 style="background:' + boroughs + '; outline-color:gray; outline-style:solid; outline-width:2px;"></i1><span>Borough Boundaries</span><br>';
+          div.innerHTML += "<h4>Green Roof<br/>Tax Abatement Rate</h4>";
+          div.innerHTML += '<i1 style="background:' + priorityFill + '"></i1><span>Priority Rate ($15/ sq ft)</span><br>';
+          div.innerHTML += '<i1 style="background:' + nonpriorityFill + '"></i1><span>Standard Rate ($5.23/sq ft)</span><br>';
+          div.innerHTML += '<i1 style="background:' + boroughs + '; outline-color:gray; outline-style:dashed; outline-width:2px;"></i1><span>Borough Boundaries</span><br>';
           return div;
         };
         legend.addTo(districtmap);
@@ -168,7 +168,8 @@
                 districtLayer = L.geoJSON(json, {
                     color: "gray",
                     fillOpacity: 0,
-                    weight: 2
+                    weight: 2.5,
+                    dashArray: '5,5'
                 }).addTo(districtmap);
             });
         }
