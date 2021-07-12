@@ -42,7 +42,7 @@ This work also relies on two datasets (stored in the [./data](./data) folder). D
     - The spatial data were sourced from the geojson file of Community District Boundaries (clipped to shoreline) available from [NYC Planning - Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page).
     - Coding of whether Community Districts were designated as Priority Areas for the GRTA was based on the [Final Rule on the GRTA from the NYC Mayor's Office of Sustainability](https://www1.nyc.gov/site/sustainability/legislation/legislation-rules.page).
     - Links to the Community Board Website were leveraged from the Indicators Data available for download from the [Community District Profiles](https://communityprofiles.planning.nyc.gov/).
-- [NYC Borough Boundaries](./data/boroughLayer.geojson) - Borough Boundaries geojson file sourced from Borough Boundaries (Clipped to Shoreline) available from [NYC Planning -  Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page#district_political).
+- [boroughLayer.geojson](./data/boroughLayer.geojson) - Borough Boundaries geojson file sourced from Borough Boundaries (Clipped to Shoreline) available from [NYC Planning -  Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page#district_political).
 
 
 ## Reporting Issues
