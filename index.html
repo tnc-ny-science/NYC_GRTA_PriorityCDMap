@@ -115,7 +115,7 @@
     /*create and load app components*/
     addBoroughLayer(); //Note - if this comes later, pop-ups and point in polygon don't work  reliably
     createMap();
-    addMapLayers();
+    addCommDistLayer();
     createGeocoder();
     addGeocoderSelectionHandler();
     addLegend();
@@ -174,7 +174,7 @@
         }
 
 
-    function addMapLayers(){
+    function addCommDistLayer(){
         try {
             //add community district polygon layer
             $.getJSON('./data/nyc_commdists_grta_priority.geojson', function(json) {
