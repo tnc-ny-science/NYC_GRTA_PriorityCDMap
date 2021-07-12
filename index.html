@@ -45,7 +45,7 @@
     <p2><br/><i>* This tool is intended for informational purposes only.</i>
        
     <br/>Developed by <a target='_blank' rel='noopener noreferrer' href="https://www.nature.org/en-us/about-us/where-we-work/united-states/new-york/">
-        The Nature Conservancy in New York</a>
+        The Nature Conservancy - New York Division</a>
     <br/> See our 
     <a target='_blank' rel='noopener noreferrer' href="https://www.nature.org/en-us/about-us/who-we-are/accountability/terms-of-use/">Terms of Use</a> & 
     <a target='_blank' rel='noopener noreferrer' href="https://www.nature.org/en-us/about-us/who-we-are/accountability/privacy-policy/">Privacy Statment</a>
@@ -197,7 +197,7 @@
                     function (layer) {
                     // optionally enable inspection of district layer here
                     return  "<strong>Community District:</strong> " + layer.feature.properties.boroname_cd + "<br/>" +
-                        "<strong>Priority Area:</strong> " + layer.feature.properties.grta_priority + "<br/>" +
+                        "<strong>Priority Tax Abatement Rate:</strong> " + layer.feature.properties.grta_priority + "<br/>" +
                         "<strong><a target='_blank' rel='noopener noreferrer' href=" + layer.feature.properties.cb_website + ">Community District Website</a></strong>" + "<br/>" +
                         "<strong><a target='_blank' rel='noopener noreferrer' href=" + layer.feature.properties.profileurl + ">Community District Profile</a></strong>";
 
@@ -365,9 +365,9 @@
                         cb_url_result = results[0].feature.properties[cb_url]
                         cd_profile_url_result = results[0].feature.properties[cd_profile_url]
                         if (locationStatus == "Yes"){
-                            locationStatus = "In Priority District"
+                            locationStatus = "<small><small>In a Priority District<br/>Priority Rate Applies ($15/sq ft)</small></small>"
                         } else {
-                            locationStatus = "Not in Priority District"
+                            locationStatus = "<small><small>Not in a Priority District<br/>Standard Rate Applies ($5.23/sq ft)</small></small>"
                         }
                         break;
                     case 2:
