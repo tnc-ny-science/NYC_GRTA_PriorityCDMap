@@ -45,6 +45,11 @@ This work also relies on two datasets (stored in the [./data](./data) folder). D
 - NYC Borough Boundaries were sourced from the geojson file Borough Boundaries (Clipped to Shoreline) available from [NYC Planning -  Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page#district_political).
 
 
-## To do:
-- Refactor with module bundler
-- Set triggers such that when user search
+## Reporting Issues
+If you experience issues with this tool, please report. Our preference is that users file an issue, with as much info as possible [via the issues tab here]](https://github.com/tnc-ny-science/NYC_GRTA_PriorityCDMap/issues). Include Browser and version, and clear description of the issue including:
+ - Expected behavior
+ - Observed behavior
+ - Screenshots as possible and seems useful
+ - Detail of how you are triggering the observed behavior (e.g., "click on magnifying glass icon...")
+
+ Alternatively, users can email michael.treglia@tnc.org with issues they are experiencing. 
