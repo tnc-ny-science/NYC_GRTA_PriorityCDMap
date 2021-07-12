@@ -113,6 +113,7 @@
 
 
     /*create and load app components*/
+    addBoroughLayer(); //Note - if this comes later, pop-ups and point in polygon don't work  reliably
     createMap();
     addMapLayers();
     createGeocoder();
@@ -161,6 +162,18 @@
         
     }
 
+  function addBoroughLayer(){
+                        //add borough boundary layer - originally sourced from https://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
+                        $.getJSON('./data/boroughLayer.geojson', function(json) {
+                districtLayer = L.geoJSON(json, {
+                    color: "gray",
+                    fillOpacity: 0,
+                    weight: 2
+                }).addTo(districtmap);
+            });
+        }
+
+
     function addMapLayers(){
         try {
             //add community district polygon layer
@@ -190,18 +203,20 @@
                 })
                 .addTo(districtmap);
             });
-                        //add borough boundary layer - originally sourced from https://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
-                        $.getJSON('./data/boroughLayer.geojson', function(json) {
-                districtLayer = L.geoJSON(json, {
-                    color: "gray",
-                    fillOpacity: 0,
-                    weight: 2
-                }).addTo(districtmap);
-            });
+            //             //add borough boundary layer - originally sourced from https://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
+            //             $.getJSON('./data/boroughLayer.geojson', function(json2) {
+            //     districtLayer = L.geoJSON(json2, {
+            //         color: "gray",
+            //         fillOpacity: 0,
+            //         weight: 2
+            //     }).addTo(districtmap);
+            // });
         } catch(e){
             passErrorToPopup(e);   
         }
     }
+
+
 
     function createGeocoder(){
         try {
