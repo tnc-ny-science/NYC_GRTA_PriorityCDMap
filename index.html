@@ -196,10 +196,10 @@
                 .bindPopup(
                     function (layer) {
                     // optionally enable inspection of district layer here
-                    return  "<strong>Community District:</strong> " + layer.feature.properties.boroname_cd + "<br/>" +
+                    return  "<big><strong>Community District:</strong> " + layer.feature.properties.boroname_cd + "<br/>" +
                         "<strong>Priority Tax Abatement Rate:</strong> " + layer.feature.properties.grta_priority + "<br/>" +
                         "<strong><a target='_blank' rel='noopener noreferrer' href=" + layer.feature.properties.cb_website + ">Community District Website</a></strong>" + "<br/>" +
-                        "<strong><a target='_blank' rel='noopener noreferrer' href=" + layer.feature.properties.profileurl + ">Community District Profile</a></strong>";
+                        "<strong><a target='_blank' rel='noopener noreferrer' href=" + layer.feature.properties.profileurl + ">Community District Profile</a></strong></big>";
 
                 })
                 .addTo(districtmap);
@@ -307,10 +307,10 @@
         if (intersectionData[1]){
         //success message
             popupMessage =  '<h1 class="popup-header">' + intersectionData[0] + '</h1>' +
-            '<p class="popup-message"><strong>Address:</strong> ' + attribs.label + '</br>' +
+            '<p class="popup-message"><big><strong>Address:</strong> ' + attribs.label + '</br>' +
             '<strong>Community District ID:</strong> ' + intersectionData[1] + '</br>' +
             "<strong><a target='_blank' rel='noopener noreferrer' href=" + intersectionData[2] + ">Community District Website</a></strong>" + "<br/>" +
-            "<strong><a target='_blank' rel='noopener noreferrer' href=" + intersectionData[3] + ">Community District Profile</a></strong>";
+            "<strong><a target='_blank' rel='noopener noreferrer' href=" + intersectionData[3] + ">Community District Profile</a></strong></big>";
             '</p>';
         } else {
         //error message
