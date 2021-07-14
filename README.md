@@ -1,6 +1,6 @@
 # NYC Green Roof Tax Abatement - Priority Area Webmap
 
-Developed by [The Nature Conservancy- New York Division](https://www.nature.org/en-us/about-us/where-we-work/united-states/new-york/), Cities Program, with support from our Data Science team.
+Developed by [The Nature Conservancy - New York Division](https://www.nature.org/en-us/about-us/where-we-work/united-states/new-york/), Cities Program, with support from our Data Science team.
 
 Read about our work to map the Green Roofs in NYC [here](https://www.nature.org/en-us/about-us/where-we-work/united-states/new-york/stories-in-new-york/green-roofs-new-york-city/) and about Sustainable Roofing Laws in NYC [here](https://www.nature.org/en-us/about-us/where-we-work/united-states/new-york/stories-in-new-york/nyc-laws-green-roofs-solar-panels/).
 
@@ -46,7 +46,7 @@ This work also relies on two datasets (stored in the [./data](./data) folder). D
 
 
 ## Reporting Issues
-If you experience issues with this tool, please report. Our preference is that users file an issue, with as much info as possible [via the issues tab here]](https://github.com/tnc-ny-science/NYC_GRTA_PriorityCDMap/issues). Include Browser and version, and clear description of the issue including:
+If you experience issues with this tool, please report. Our preference is that users file an issue, with as much info as possible [via the issues tab here](https://github.com/tnc-ny-science/NYC_GRTA_PriorityCDMap/issues). Include Browser and version, and clear description of the issue including:
  - Expected behavior
  - Observed behavior
  - Screenshots as possible and seems useful
