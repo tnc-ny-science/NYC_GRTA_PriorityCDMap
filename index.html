@@ -2,13 +2,14 @@
 <html>
 <head>
     
-    <title>Green Roof Tax Abatement - Priority Community District Locator</title>
+    <title>NYC Green Roof Tax Abatement - Find your Abatement Rate</title>
 
     <meta charset="utf-8" />
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     
-    <link rel="shortcut icon" type="image/x-icon" href="https://nature.org/content/dam/tnc/nature/en/icons/general-icons/icon_nature_favicon.ico" />
+    <!--FAVICON URL-->
+    <!--<link rel="shortcut icon" type="image/x-icon" href="https://nature.org/content/dam/tnc/nature/en/icons/general-icons/icon_nature_favicon.ico" />-->
     <link rel="stylesheet" href="demo.css" />
 
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/> 
@@ -33,10 +34,12 @@
 
 
 <div class="place-holder1">
-    <p><strong>Find the Rate for the 
-        <a target='_blank' rel='noopener noreferrer' href="https://www1.nyc.gov/site/sustainability/legislation/legislation-rules.page">Green Roof Tax Abatement</a>
-         in Your Community District
-    </br></br>Enter your address using the icon in the top-right of the map and find out*</strong>
+    <p><strong>
+        <font size="+1">What is the    
+        <a target='_blank' rel='noopener noreferrer' href="https://www1.nyc.gov/site/sustainability/legislation/legislation-rules.page">NYC Green Roof Tax Abatement</a>
+         Rate in Your Community District?</font>
+    </br></br>
+    <i>Enter your address using the icon in the top-right of the map and find out*</i></strong>
 <!--    </br></br><small>Properties in Priority Community Districts are eligible for an abatement of $15/sq ft.
     </br>The rate for properties in other Community Districts is $5.23/sq ft.</small></p>
     <p>Place holder div for testing reduced size map</p>-->
@@ -152,7 +155,7 @@
 
         legend.onAdd = function(districtmap) {
           var div = L.DomUtil.create("div", "legend");
-          div.innerHTML += "<h4>Green Roof<br/>Tax Abatement Rate</h4>";
+          div.innerHTML += "<h4>NYC Green Roof<br/>Tax Abatement Rate</h4>";
           div.innerHTML += '<i1 style="background:' + priorityFill + '"></i1><span>Priority Rate ($15/sq ft)</span><br>';
           div.innerHTML += '<i1 style="background:' + nonpriorityFill + '"></i1><span>Standard Rate ($5.23/sq ft)</span><br>';
           div.innerHTML += '<i1 style="background:' + boroughs + '; outline-color:gray; outline-style:dashed; outline-width:2px;"></i1><span>Borough Boundaries</span><br>';
