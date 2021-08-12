@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>NYC Green Roof Tax Abatement - Find your Abatement Rate</title>
+
+    <meta charset="utf-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!--FAVICON URL-->
+    <link rel="shortcut icon" type="image/x-icon" href="https://nature.org/content/dam/tnc/nature/en/icons/general-icons/icon_nature_favicon.ico">
+    <link rel="stylesheet" href="/demo.b3443d18.css">
+
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""> 
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+    <!-- Load geocoding plugin after Leaflet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.4/leaflet-geocoder-mapzen.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.4/leaflet-geocoder-mapzen.js"></script>
+
+    <!-- Load point-in-polygon plugin -->
+    <script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js"></script>
+
+    <!-- add require.js -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    
+    <!-- sample code in case need to point to 3.6.0 specifically
+        <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script> 
+-->
+
+    
+<script src="/demo.b3443d18.js"></script></head>
+<body>
+
+
+<div class="place-holder1">
+    <p><strong>
+        <font size="+1">What is the    
+        <a target="_blank" rel="noopener noreferrer" href="https://www1.nyc.gov/site/sustainability/legislation/legislation-rules.page">NYC Green Roof Tax Abatement</a>
+         Rate in Your Community District?</font>
+    <br><br>
+    <i>Enter your address using the icon in the top-right of the map and find out*</i></strong>
+<!--    </br></br><small>Properties in Priority Community Districts are eligible for an abatement of $15/sq ft.
+    </br>The rate for properties in other Community Districts is $5.23/sq ft.</small></p>
+    <p>Place holder div for testing reduced size map</p>-->
+</p></div>
+    <div id="mapid"></div>
+<div class="place-holder2">
+    <p2><br><i>* This tool is intended for informational purposes only.</i>
+       
+    <br>Developed by <a target="_blank" rel="noopener noreferrer" href="https://www.nature.org/en-us/about-us/where-we-work/united-states/new-york/">
+        The Nature Conservancy</a>
+    <br> See our 
+    <a target="_blank" rel="noopener noreferrer" href="https://www.nature.org/en-us/about-us/who-we-are/accountability/terms-of-use/">Terms of Use</a> & 
+    <a target="_blank" rel="noopener noreferrer" href="https://www.nature.org/en-us/about-us/who-we-are/accountability/privacy-policy/">Privacy Statment</a>
+    <br>
+    <a target="_blank" rel="noopener noreferrer" href="https://github.com/tnc-ny-science/NYC_GRTA_PriorityCDMap"><small><strong>Check out this project on GitHub</strong></small>
+        <img src="/GitHub-Mark-Light-32px.5750e6f3.png" width="12" height="12" alt="GitHub Logo"></a>
+    </p2>
+</div>
+
+<script>/*global variables */
+
+/*set thematic colors */
+var priorityFill = 'rgba(205, 201, 15, 0.2)';
+var nonpriorityFill = 'rgba(0, 150, 204, 0.2)';
+var boroughs = 'rgba(0, 0, 0, 0)';
+/*community district layer*/
+
+var districtLayer = null;
+/*map, geocoder*/
+
+var districtmap, geocoder;
+/*list fields here to support schema change for community district layer */
+
+var priorityDistrictFieldName = "Tax Abatement Priority Area";
+var districtIDFieldName = "boroname_cd";
+var cb_url = "cb_website";
+var cd_profile_url = "profileurl"; //Basemap Options
+// Currently Active
+
+var basemap = L.tileLayer('https://maps{s}.nyc.gov/xyz/1.0.0/carto/basemap/{z}/{x}/{y}.jpg', {
+  minNativeZoom: 8,
+  maxNativeZoom: 19,
+  subdomains: '1234',
+  bounds: L.latLngBounds([39.3682, -75.9374], [42.0329, -71.7187])
+});
+var labels = L.tileLayer('https://maps{s}.nyc.gov/xyz/1.0.0/carto/label/{z}/{x}/{y}.png8', {
+  attribution: 'basemap by <a href="https://maps.nyc.gov/tiles/">NYC DoITT</a>',
+  minNativeZoom: 11,
+  maxNativeZoom: 19,
+  subdomains: '1234',
+  bounds: L.latLngBounds([39.3682, -75.9374], [42.0329, -71.7187])
+});
+/*      // NOT CURRENTLY USED - Imagery and the labels to go over it. 
+        //Will only change add if the right labels can be kept with right basemap
+    var imagery2018 = L.tileLayer('https://maps.nyc.gov/xyz/1.0.0/photo/2018/{z}/{x}/{y}.png8', {
+    attribution: 'imagery from <a href="https://maps.nyc.gov/tiles/">NYC DoITT</a>',
+    minNativeZoom: 11,
+    maxNativeZoom: 19,
+    subdomains: '1234',
+    bounds: L.latLngBounds([39.3682, -75.9374], [42.0329, -71.7187])
+    }); 
+    var labels_light = L.tileLayer('https://maps.nyc.gov/xyz/1.0.0/carto/label-lt/{z}/{x}/{y}.png', {
+    attribution: 'imagery from <a href="https://maps.nyc.gov/tiles/">NYC DoITT</a>',
+    minNativeZoom: 11,
+    maxNativeZoom: 19,
+    subdomains: '1234',
+    bounds: L.latLngBounds([39.3682, -75.9374], [42.0329, -71.7187])
+    });  */
+
+/*create and load app components*/
+
+addBoroughLayer(); //Note - if this comes later, pop-ups and point in polygon don't work  reliably
+
+createMap();
+addCommDistLayer();
+createGeocoder();
+addGeocoderSelectionHandler();
+addLegend();
+L.control.scale().addTo(districtmap);
+/*use popup centered in map to convey errors */
+
+function passErrorToPopup(e) {
+  var errorMessage = '<p>There was problem with this app</p>' + '<p>' + e + '</p>';
+  var errorPopup = L.popup().setLatLng(districtmap.getCenter()).setContent(errorMessage).openOn(districtmap);
+}
+
+function createMap() {
+  var mapOptions = {
+    maxBounds: [[39.50, -75.74], [41.752, -71.92]],
+    minZoom: 10,
+    layers: [basemap, labels]
+  }; //instantiate map
+
+  districtmap = L.map('mapid', mapOptions).setView([40.703312, -73.97968], 10);
+}
+
+function addLegend() {
+  // Add LegendLegend specific
+  var legend = L.control({
+    position: "bottomright"
+  });
+
+  legend.onAdd = function (districtmap) {
+    var div = L.DomUtil.create("div", "legend");
+    div.innerHTML += "<h4>NYC Green Roof<br/>Tax Abatement Rate</h4>";
+    div.innerHTML += '<i1 style="background:' + priorityFill + '"></i1><span>Priority Rate ($15/sq ft)</span><br>';
+    div.innerHTML += '<i1 style="background:' + nonpriorityFill + '"></i1><span>Standard Rate ($5.23/sq ft)</span><br>';
+    div.innerHTML += '<i1 style="background:' + boroughs + '; outline-color:gray; outline-style:dashed; outline-width:2px;"></i1><span>Borough Boundaries</span><br>';
+    return div;
+  };
+
+  legend.addTo(districtmap);
+}
+
+function addBoroughLayer() {
+  //add borough boundary layer - originally sourced from https://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
+  $.getJSON('./data/boroughLayer.geojson', function (json) {
+    districtLayer = L.geoJSON(json, {
+      color: "gray",
+      fillOpacity: 0,
+      weight: 2.5,
+      dashArray: '5,5'
+    }).addTo(districtmap);
+  });
+}
+
+function addCommDistLayer() {
+  try {
+    //add community district polygon layer
+    $.getJSON('./data/nyc_commdists_grta_priority.geojson', function (json) {
+      districtLayer = L.geoJSON(json, {
+        style: function style(feature) {
+          /*conditionally set overlay fill color*/
+          color = priorityFill, color;
+
+          if (feature.properties.grta_priority == "No") {
+            color = nonpriorityFill;
+          }
+
+          return {
+            fillColor: color,
+            fillOpacity: 1,
+            weight: 1,
+            color: "gray"
+          };
+        }
+      }).bindPopup(function (layer) {
+        // optionally enable inspection of district layer here
+        return "<big><strong>Community District:</strong> " + layer.feature.properties.boroname_cd + "<br/>" + "<strong>Priority Tax Abatement Rate:</strong> " + layer.feature.properties.grta_priority + "<br/>" + "<strong><a target='_blank' rel='noopener noreferrer' href=" + layer.feature.properties.cb_website + ">Community District Website</a></strong>" + "<br/>" + "<strong><a target='_blank' rel='noopener noreferrer' href=" + layer.feature.properties.profileurl + ">Community District Profile</a></strong></big>";
+      }).addTo(districtmap);
+    }); //             //add borough boundary layer - originally sourced from https://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
+    //             $.getJSON('./data/boroughLayer.geojson', function(json2) {
+    //     districtLayer = L.geoJSON(json2, {
+    //         color: "gray",
+    //         fillOpacity: 0,
+    //         weight: 2
+    //     }).addTo(districtmap);
+    // });
+  } catch (e) {
+    passErrorToPopup(e);
+  }
+}
+
+function createGeocoder() {
+  try {
+    //define geocoder options
+    var options = {
+      url: "https://geosearch.planninglabs.nyc/v1",
+      attribution: "geocoding by <a href='https://geosearch.planninglabs.nyc'>NYC Planning</a>",
+      panToPoint: true,
+      markers: false,
+      textStrings: {
+        INPUT_PLACEHOLDER: 'Enter an NYC Address',
+        INPUT_TITLE_ATTRIBUTE: 'Determine if address is within a Priority Community District for the Green Roof Tax Abatement'
+      }
+    };
+    geocoder = L.control.geocoder(null, options);
+    geocoder.setPosition('topright').addTo(districtmap);
+  } catch (e) {
+    passErrorToPopup(e);
+  }
+} //create custom marker
+
+
+function createMarker(result) {
+  try {
+    markerOptions = {
+      opacity: 1.0
+    };
+    messageContent = composeMessage(result);
+    marker = new L.Marker(result.latlng, markerOptions).bindPopup(messageContent).addTo(districtmap).openPopup(); //remove popup on geocoder clear for new search or focus to select from prior results
+
+    geocoder.on('reset', function (e) {
+      marker.remove();
+    });
+    geocoder.on('focus', function (e) {
+      marker.remove();
+    });
+  } catch (e) {
+    passErrorToPopup(e);
+  }
+} //handle selection of geocoder result from input
+
+
+function addGeocoderSelectionHandler() {
+  try {
+    geocoder.on('select', function (result) {
+      if (result.feature) {
+        //console.log('You’ve selected ' + result.latlng.lat + ":" + result.latlng.lng);
+        //clear and close geocoder
+        geocoder.collapse();
+        createMarker(result);
+      } else {
+        console.log('Address not found');
+      }
+    });
+  } catch (e) {
+    passErrorToPopup(e);
+  }
+}
+/*set popup message -- input layer object with feature property referencing selected object */
+
+
+function composeMessage(result) {
+  try {
+    //determine if inside priority district
+    //data: [locationstatus, districtid]
+    intersectionData = getIntersectionData(result); //properties of geocoder result
+
+    var attribs = result.feature.properties;
+    var popupMessage = null; //if have districtid
+
+    if (intersectionData[1]) {
+      //success message
+      popupMessage = '<h1 class="popup-header">' + intersectionData[0] + '</h1>' + '<p class="popup-message"><big><strong>Address:</strong> ' + attribs.label + '</br>' + '<strong>Community District ID:</strong> ' + intersectionData[1] + '</br>' + "<strong><a target='_blank' rel='noopener noreferrer' href=" + intersectionData[2] + ">Community District Website</a></strong>" + "<br/>" + "<strong><a target='_blank' rel='noopener noreferrer' href=" + intersectionData[3] + ">Community District Profile</a></strong></big>";
+      '</p>';
+    } else {
+      //error message
+      popupMessage = '<h1 class="popup-header"> Community District Not Found </h1>' + '<p class="popup-message">' + intersectionData[0] + '</br>' + 'There was a problem locating a community district for the location: ' + '</br>' + attribs.label + '</br>' + ' <a href="https://www.nature.org/en-us/" target="_blank">Learn more</a>' + '</p>';
+    }
+
+    return popupMessage;
+  } catch (e) {
+    passErrorToPopup(e);
+  }
+}
+/*With geocoder result, check for intersection with community district layer; 
+return array with status (in/out priority district), districtid
+*/
+
+
+function getIntersectionData(result) {
+  try {
+    console.log("location is: " + result.latlng.toString());
+    /*locationStatus outcomes: 
+    Yes - intersects priority dist.
+    No - intersects non-priority dist.
+    No District Found - geocode result does not intersect any district (address error, geocoder error, district geom error)
+    Multiple Districts Found - geocoder result intersects overlapping districts (district geom error)
+    */
+
+    locationStatus = null;
+    districtID = null;
+    cb_url_result = null;
+    cd_profile_url_result = null; //check for district layer
+
+    if (districtLayer) {
+      //check for intersection
+      var results = leafletPip.pointInLayer(result.latlng, districtLayer);
+      var numDistricts = results.length;
+
+      switch (numDistricts) {
+        case 0:
+          locationStatus = "No District Found";
+          break;
+
+        case 1:
+          //Expected: value is "Yes" or "No"
+          locationStatus = results[0].feature.properties[priorityDistrictFieldName];
+          districtID = results[0].feature.properties[districtIDFieldName];
+          cb_url_result = results[0].feature.properties[cb_url];
+          cd_profile_url_result = results[0].feature.properties[cd_profile_url];
+
+          if (locationStatus == "Yes") {
+            locationStatus = "<small><small>In a Priority District<br/>Priority Rate Applies ($15/sq ft)</small></small>";
+          } else {
+            locationStatus = "<small><small>Not in a Priority District<br/>Standard Rate Applies ($5.23/sq ft)</small></small>";
+          }
+
+          break;
+
+        case 2:
+          locationStatus = "Multiple Districts Found";
+          break;
+
+        default:
+          //problem with numDistricts 
+          locationStatus = "Error locating district";
+          break;
+      }
+    }
+
+    return [locationStatus, districtID, cb_url_result, cd_profile_url_result];
+  } catch (e) {
+    //todo: provide error notifications with widget
+    console.log("Error in getIntersectionData", e);
+  }
+}</script>
+
+
+
+</body>
+</html>

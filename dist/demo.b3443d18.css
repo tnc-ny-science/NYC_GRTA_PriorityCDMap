@@ -1,0 +1,87 @@
+body {
+    padding: 0;
+    margin: auto;
+  /* width: 600px;*/
+}
+
+.place-holder1 {
+    height: 100px;
+    background-color: rgb(73, 169, 66, 1);
+    color: white;
+    font-family: Arial;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.place-holder1 p {
+   /* color: white; */
+}
+
+.place-holder2 {
+    height: 100px;
+    background-color: rgb(73, 169, 66, 1);
+    color: white;
+    font-family: Arial;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.place-holder2 p2 {
+   color: white;
+   font: Arial;
+   font-size: 0.8em;
+   font-weight: bold;
+}
+
+#mapid {
+    height: calc(100vh - (220px)); 
+ }
+
+ a:link {
+    color:white;
+  }
+  
+  /* visited link */
+  a:visited {
+    color: white;
+  }
+
+
+/*Legend specific*/
+.legend {
+    padding: 6px 8px;
+    font: 14px Arial, Arial, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    /*box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);*/
+    /*border-radius: 5px;*/
+    line-height: 24px;
+    color: #555;
+  }
+  .legend h4 {
+    text-align: center;
+    font-size: 16px;
+    margin: 2px 12px 8px;
+    color: #777;
+  }
+  
+  .legend span {
+    position: relative;
+    bottom: 3px;
+  }
+  
+  .legend i1 {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin: 0 8px 0 0;
+    outline: 1px solid rgb(128, 128, 128, 1);
+  }
+  
+  .legend i1.icon {
+    background-size: 18px;
+    background-color: rgba(255, 255, 255, 1);
+  }
+  
+
+/*# sourceMappingURL=/demo.b3443d18.css.map */
