@@ -45,6 +45,15 @@ This work also relies on two datasets (stored in the [./data](./data) folder). D
 - [boroughLayer.geojson](./data/boroughLayer.geojson) - Borough Boundaries geojson file sourced from Borough Boundaries (Clipped to Shoreline) available from [NYC Planning -  Bytes of the Big Apple](https://www1.nyc.gov/site/planning/data-maps/open-data.page#district_political).
 
 
+## Bundling using parcel.js
+
+To bundle this using [parcel.js](https://parceljs.org/) users can follow instructions [here](https://parceljs.org/getting_started.html). The output gets bundled into the `/dist` folder. Add the `.cache` folder to the `.gitignore` file.
+
+The files in the data folder are not bundled as part of this process. From within the top-level folder users can copy the data for full functionality in a terminal using bash: 
+
+`cp -r  data/ dist/data`
+
+
 ## Reporting Issues
 If you experience issues with this tool, please report. Our preference is that users file an issue, with as much info as possible [via the issues tab here](https://github.com/tnc-ny-science/NYC_GRTA_PriorityCDMap/issues). Include Browser and version, and clear description of the issue including:
  - Expected behavior
@@ -53,3 +62,4 @@ If you experience issues with this tool, please report. Our preference is that u
  - Detail of how you are triggering the observed behavior (e.g., "click on magnifying glass icon...")
 
  Alternatively, users can email michael.treglia@tnc.org with issues they are experiencing. 
+
