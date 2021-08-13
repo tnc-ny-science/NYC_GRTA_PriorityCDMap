@@ -323,11 +323,11 @@
         } else {
         //error message
             popupMessage =  '<h1 class="popup-header"> Community District Not Found </h1>' +
-            '<p class="popup-message">'+ intersectionData[0]  + '</br>' +
-            'There was a problem locating a community district for the location: ' + '</br>' +
-            attribs.label + '</br>' +
-            ' <a href="https://www.nature.org/en-us/" target="_blank">Learn more</a>' +
-            '</p>'
+            '<big><strong><p class="popup-message">'+ intersectionData[0]  + 
+            ' - There was a problem locating a Community District for:</strong>' + '</br>' +
+            attribs.label + '</br></br>' +
+            '<i>The address you searched for may be outside of a populated community district.</i>' +
+            '</p></big>'
         }
 
         return popupMessage
