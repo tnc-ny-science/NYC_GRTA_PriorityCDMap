@@ -23,18 +23,18 @@ body {
     color: white;
     font-family: Arial;
     text-align: center;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
 }
 
 .place-holder2 p2 {
    color: white;
    font: Arial;
-   font-size: 0.8em;
+   font-size: 0.9em;
    font-weight: bold;
 }
 
 #mapid {
-    height: calc(100vh - (220px)); 
+    height: calc(100vh - (240px)); 
  }
 
  a:link {
