@@ -30,7 +30,6 @@ This work relies on the following packages and libraries (all sourced from CDN o
 - [Leaflet](https://leafletjs.com/) (version 1.7.1) - This is the  underlying webmapping library we leveraged.
 - [NYC Planning Labs geocoder](https://geosearch.planninglabs.nyc/docs/) - a NYC-specific geocoding system that returns spatial coordinates based on address search, developed by the NYC Department of City Planning. Note, Input with autocomplete enabled. The map extent and zoom levels are contrained.  The geocoder API prioritizes addresses within the active map extent.
 - [Leaflet Pelias geocoder plugin](https://github.com/pelias/leaflet-plugin) - A plugin for Leaflet that enables Pelias-based geocoding engines (such as the NYC Planning Labs geocoder) to be easily embeded in Leaflet webmaps.
-- [jquery](https://jquery.com/download/) (tested with 3.6, using latest version in production) - Library, that in this case, enables import of geojson files to leaflet for visualization and overlay analyses.
 - [Leaflet point-in-polygon plugin](https://github.com/mapbox/leaflet-pip) - a plug-in for Leaflet that enables point-in-polygon overlay analyses (to determine what Community District individual addresses fall within). This plugin is  Copyright (c) 2017, Mapbox, All rights reserved.
 
 
