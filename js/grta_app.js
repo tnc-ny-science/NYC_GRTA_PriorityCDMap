@@ -176,7 +176,7 @@
 
             //define geocoder options
             var options = {
-                  url: "https://geosearch.planninglabs.nyc/v1",
+                  url: "https://geosearch.planninglabs.nyc/v2",
                   attribution: "geocoding by <a href='https://geosearch.planninglabs.nyc'>NYC Planning</a>", 
                   panToPoint: true,
                   markers: false,
