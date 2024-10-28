@@ -141,7 +141,7 @@
             var div = L.DomUtil.create("div", "legend");
             div.innerHTML += "<h4>NYC Green Roof<br/>Tax Abatement Rate</h4>";
             div.innerHTML += '<i1 style="background:' + priorityFill + '"></i1><span>Priority Rate ($15/sq ft)</span><br>';
-            div.innerHTML += '<i1 style="background:' + nonpriorityFill + '"></i1><span>Standard Rate ($5.23/sq ft)</span><br>';
+            div.innerHTML += '<i1 style="background:' + nonpriorityFill + '"></i1><span>Standard Rate ($10/sq ft)</span><br>';
             div.innerHTML += '<i1 style="background:' + boroughsFill 
                 + '; outline-color:gray; outline-style:dashed; outline-width:2px;"></i1><span>Borough Boundaries</span><br>';
             return div;
@@ -319,7 +319,7 @@
                         if (locationStatus == "Yes"){
                             locationStatus = "<small><small>In a Priority District<br/>Priority Rate Applies ($15/sq ft)</small></small>"
                         } else {
-                            locationStatus = "<small><small>Not in a Priority District<br/>Standard Rate Applies ($5.23/sq ft)</small></small>"
+                            locationStatus = "<small><small>Not in a Priority District<br/>Standard Rate Applies ($10/sq ft)</small></small>"
                         }
                         break;
                     case 2:
